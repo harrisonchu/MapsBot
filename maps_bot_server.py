@@ -9,7 +9,9 @@ def directions():
 	#Twilio sends the SMS data via POST
 	if request.method == 'POST':
 		print(request.form['Body'])	
-	return "Hello World!"
+
+	#return this so twilio doesn't through an error
+	return "<Response>"
 
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 5000))
