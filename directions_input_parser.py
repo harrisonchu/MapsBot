@@ -2,9 +2,9 @@ import json
 import re
 
 def clean_html_tags(raw_html):
-  cleanr =re.compile('<.*?>')
-  cleantext = re.sub(cleanr,'', raw_html)
-  return cleantext
+ 	cleanr =re.compile('<.*?>')
+ 	cleantext = re.sub(cleanr,'', raw_html)
+ 	return cleantext
 
 class DirectionQuery:
 	def __init__(self, is_valid, raw_input):
