@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 import os
 
 app = Flask(__name__)
@@ -8,8 +9,7 @@ def directions():
 	#Twilio sends the SMS data via POST
 	if request.method == 'POST':
 		print(request.form['Body'])	
-	else:
-		return "Hello World!"
+	return "Hello World!"
 
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 5000))
