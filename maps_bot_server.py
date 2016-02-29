@@ -12,7 +12,7 @@ def directions():
 		print(request.form['Body'])	
 
 	#return this so twilio doesn't through an error
-	response = SimpleTwilioResponse()
+	response = simple_twilio_response.SimpleTwilioResponse()
 	response.set_message("this has been successful!")
 	return response.print_xml()
 
