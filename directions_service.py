@@ -25,4 +25,4 @@ class DirectionsService:
 		api_query_string['destination'] = query.destination
 	
 		r = requests.get(self.maps_api_endpoint, api_query_string)
-		print(r.text)	
+		return r
