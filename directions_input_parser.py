@@ -1,5 +1,10 @@
 import json
-from BeautifulSoup import BeautifulSoup
+import re
+
+def clean_html_tags(raw_html):
+  cleanr =re.compile('<.*?>')
+  cleantext = re.sub(cleanr,'', raw_html)
+  return cleantext
 
 class DirectionQuery:
 	def __init__(self, is_valid, raw_input):
@@ -14,8 +19,8 @@ class DirectionOutput:
 		self.destination = ""
 		self.turn_by_turn_directions = ""
 
-class DirectionsParser:
-	def parse_direction_query(self, input):
+class DirectionParser:
+	def parse_directions_query(self, input):
 		input = input.lower()
 
 		#for now assume input is 'from xxx to xxx'
@@ -38,12 +43,12 @@ class DirectionsParser:
 
 	def parse_directions_output(self, directions_json_string):
 		j = json.loads(directions_json_string)
-		steps = ['routes'][0]['legs'][0]['steps']	
+		steps = j['routes'][0]['legs'][0]['steps']	
 
 		full_directions = ""
 		for step in steps:
-			clean_step = BeautifulSoup(step['html_instructions']).text	
-			full_directions + clean_step + ". "
+			clean_step = clean_html_tags(step['html_instructions'])	
+			full_directions += clean_step + ". "
 		
 		output = DirectionOutput()
 		output.turn_by_turn_directions = full_directions

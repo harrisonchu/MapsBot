@@ -10,11 +10,11 @@ class Directions:
 
 class DirectionsService:
 	def __init__(self):
-		self.input_parser = DirectionInputParser()
+		self.parser = DirectionParser()
 		self.maps_api_endpoint = 'https://maps.googleapis.com/maps/api/directions/json'
 
 	def get_directions(self, input):
-		query = self.input_parser.get_direction_query(input)	
+		query = self.parser.parse_directions_query(input)	
 		if not query.is_valid:
 			return Directions(False, input, "")
 
@@ -25,4 +25,5 @@ class DirectionsService:
 		api_query_string['destination'] = query.destination
 	
 		r = requests.get(self.maps_api_endpoint, api_query_string)
-		return r
+		directions_output = self.parser.parse_directions_output(r.text)
+		return directions_output.turn_by_turn_directions
