@@ -48,7 +48,8 @@ class DirectionParser:
 		full_directions = ""
 		for step in steps:
 			clean_step = clean_html_tags(step['html_instructions'])	
-			full_directions += clean_step + ". "
+			distance_in_direction = step['distance']['text']
+			full_directions += clean_step + " for " + distance_in_direction + ".  \n"
 		
 		output = DirectionOutput()
 		output.turn_by_turn_directions = full_directions

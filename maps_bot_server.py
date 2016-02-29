@@ -1,8 +1,8 @@
 from flask import Flask
 from flask import request
 import os
-import simple_twilio_response
 import directions_service
+from twilio import twiml
 
 app = Flask(__name__)
 directions_service = directions_service.DirectionsService()
@@ -17,9 +17,9 @@ def directions():
 		directions = directions_service.get_directions(user_input)
 
 	#return this so twilio doesn't through an error
-	response = simple_twilio_response.SimpleTwilioResponse()
-	response.set_message(directions)
-	return response.print_xml()
+	response = twiml.Response()
+	response.message(directions)
+	return response.toxml()
 
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 5000))
