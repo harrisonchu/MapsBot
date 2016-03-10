@@ -58,7 +58,18 @@ class DirectionParser:
 		output.turn_by_turn_directions = full_directions
 		return output	
 
+
+# From what I've observed with user behavior, people usually only include the city once in their query especially if the 
+# Destination is a business, in which case Google maps is more likely to return an unambigious result if we specify the city in 
+# The address
 def get_best_guess_for_city(origin, destination):
+	best_guess = None
 	origin_parsed = usaddress.tag(origin)
 	destination_parsed = usaddress.tag(destination)
-	
+	try:
+		best_guess = origin_parsed[0]['PlaceName']
+	 	#If empty try and grab it from the other address	
+		best_guess = destination_parsed[0]['PlaceName']
+		return best_guess
+	except:
+		return best_guess
