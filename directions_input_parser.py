@@ -1,5 +1,6 @@
 import json
 import re
+import usaddress
 
 def clean_html_tags(raw_html):
  	cleanr =re.compile('<.*?>')
@@ -11,6 +12,8 @@ class DirectionQuery:
 		self.is_valid = is_valid
 		self.destination = ""
 		self.origin = ""
+		#For now only bias for US users."
+		self.region = "us"
 		self.raw_input = raw_input
 
 class DirectionOutput:
@@ -54,3 +57,8 @@ class DirectionParser:
 		output = DirectionOutput()
 		output.turn_by_turn_directions = full_directions
 		return output	
+
+def get_best_guess_for_city(origin, destination):
+	origin_parsed = usaddress.tag(origin)
+	destination_parsed = usaddress.tag(destination)
+	
